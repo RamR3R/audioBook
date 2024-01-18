@@ -7,6 +7,6 @@ courseRouter.get('/', CourseController.getAllCourses);
 courseRouter.get('/:id', CourseController.getCourseById);
 courseRouter.post('/',authenticateUser, CourseController.createCourse);
 courseRouter.patch('/:id',authenticateUser, CourseController.updateCourse);
-courseRouter.delete('/:id', CourseController.deleteCourse);
+courseRouter.delete('/:id',authenticateUser, CourseController.deleteCourse);
 
 module.exports = courseRouter;

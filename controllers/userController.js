@@ -79,9 +79,11 @@ const removeFav = async(req,res)=>{
   try{
     let user = await User.findById(req.user.id);
     let userFav = user.fav;
-    userFav.splice(userFav.indexOf(req.body.fav),1);
+    console.log(userFav);
+    userFav = userFav.splice(userFav.indexOf(req.body.fav),1);
+    console.log(userFav);
     await User.findByIdAndUpdate(req.user.id , {fav: userFav});
-    res.status(204).json({message : "removed from Favourites"});
+    res.status(202).json({message : "removed from Favourites"});
   }
   catch(err)
   {

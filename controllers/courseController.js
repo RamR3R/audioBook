@@ -4,7 +4,7 @@ const Audiobook = require('../models/audiobook');
 
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find().populate('contents');
+    const courses = await Course.find().populate(['contents','createdBy']);
     res.json(courses);
   } catch (error) {
     res.status(500).json({ message: error.message });
