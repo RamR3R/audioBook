@@ -1,0 +1,421 @@
+swagger: '2.0'
+info:
+  title: Audio Book API
+  version: 1.0.0
+basePath: /
+tags:
+  - name: Audiobooks
+    description: Operations related to audiobooks
+  - name: Courses
+    description: Operations related to courses
+  - name: Users
+    description: Operations related to users
+
+paths:
+  /audiobooks:
+    get:
+      tags:
+        - Audiobooks
+      summary: Get all audiobooks
+      responses:
+        '200':
+          description: Successfully retrieved the list of audiobooks
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Audiobook'
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - Audiobooks
+      summary: Create a new audiobook
+      parameters:
+        - in: body
+          name: body
+          description: Audiobook data
+          required: true
+          schema:
+            $ref: '#/definitions/AudiobookInput'
+      responses:
+        '201':
+          description: Successfully created an audiobook
+          schema:
+            $ref: '#/definitions/Audiobook'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /audiobooks/{id}:
+    get:
+      tags:
+        - Audiobooks
+      summary: Get audiobook by ID
+      parameters:
+        - name: id
+          in: path
+          description: Audiobook ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved the audiobook
+          schema:
+            $ref: '#/definitions/Audiobook'
+        '404':
+          description: Audiobook not found
+        '500':
+          description: Internal server error
+
+    patch:
+      tags:
+        - Audiobooks
+      summary: Update audiobook by ID
+      parameters:
+        - name: id
+          in: path
+          description: Audiobook ID
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated audiobook data
+          required: true
+          schema:
+            $ref: '#/definitions/AudiobookInput'
+      responses:
+        '200':
+          description: Successfully updated the audiobook
+          schema:
+            $ref: '#/definitions/Audiobook'
+        '400':
+          description: Bad request
+        '404':
+          description: Audiobook not found
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Audiobooks
+      summary: Delete audiobook by ID
+      parameters:
+        - name: id
+          in: path
+          description: Audiobook ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successfully deleted the audiobook
+        '404':
+          description: Audiobook not found
+        '500':
+          description: Internal server error
+
+  /courses:
+    get:
+      tags:
+        - Courses
+      summary: Get all courses
+      responses:
+        '200':
+          description: Successfully retrieved the list of courses
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Course'
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - Courses
+      summary: Create a new course
+      parameters:
+        - in: body
+          name: body
+          description: Course data
+          required: true
+          schema:
+            $ref: '#/definitions/CourseInput'
+      responses:
+        '201':
+          description: Successfully created a course
+          schema:
+            $ref: '#/definitions/Course'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /courses/{id}:
+    get:
+      tags:
+        - Courses
+      summary: Get course by ID
+      parameters:
+        - name: id
+          in: path
+          description: Course ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved the course
+          schema:
+            $ref: '#/definitions/Course'
+        '404':
+          description: Course not found
+        '500':
+          description: Internal server error
+
+    patch:
+      tags:
+        - Courses
+      summary: Update course by ID
+      parameters:
+        - name: id
+          in: path
+          description: Course ID
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated course data
+          required: true
+          schema:
+            $ref: '#/definitions/CourseInput'
+      responses:
+        '200':
+          description: Successfully updated the course
+          schema:
+            $ref: '#/definitions/Course'
+        '400':
+          description: Bad request
+        '404':
+          description: Course not found
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Courses
+      summary: Delete course by ID
+      parameters:
+        - name: id
+          in: path
+          description: Course ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successfully deleted the course
+        '404':
+          description: Course not found
+        '500':
+          description: Internal server error
+
+  /users/register:
+    post:
+      tags:
+        - Users
+      summary: Register a new user
+      parameters:
+        - in: body
+          name: body
+          description: User registration data
+          required: true
+          schema:
+            $ref: '#/definitions/UserRegistrationInput'
+      responses:
+        '201':
+          description: Successfully registered a new user
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Login a user
+      parameters:
+        - in: body
+          name: body
+          description: User login data
+          required: true
+          schema:
+            $ref: '#/definitions/UserLoginInput'
+      responses:
+        '200':
+          description: Successfully logged in
+          schema:
+            $ref: '#/definitions/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /users/addfav:
+    post:
+      tags:
+        - Users
+      summary: Add audiobook to user's favorites
+      parameters:
+        - in: body
+          name: body
+          description: Audiobook ID to add to favorites
+          required: true
+          schema:
+            $ref: '#/definitions/UserFavInput'
+      responses:
+        '201':
+          description: Successfully added to favorites
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /users/removefav:
+    post:
+      tags:
+        - Users
+      summary: Remove audiobook from user's favorites
+      parameters:
+        - in: body
+          name: body
+          description: Audiobook ID to remove from favorites
+          required: true
+          schema:
+            $ref: '#/definitions/UserFavInput'
+      responses:
+        '202':
+          description: Successfully removed from favorites
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /users/userdetails:
+    get:
+      tags:
+        - Users
+      summary: Get details of the logged-in user
+      responses:
+        '200':
+          description: Successfully retrieved user details
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+definitions:
+  Audiobook:
+    type: object
+    properties:
+      title:
+        type: string
+      author:
+        type: string
+      narrator:
+        type: string
+      length:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      description:
+        type: string
+      coverImage:
+        type: string
+      audiofileurl:
+        type: string
+      audioFile:
+        type: object
+        properties:
+          name:
+            type: string
+          audio:
+            type: object
+            properties:
+              data:
+                type: string
+              contentType:
+                type: string
+      uploadedBy:
+        type: string
+
+
+    type: object
+    properties:
+      title:
+        type: string
+      author:
+        type: string
+      narrator:
+        type: string
+      length:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      description:
+        type: string
+      coverImage:
+        type: string
+      audiofileurl:
+        type: string
+      audioFile:
+        type: object
+        properties:
+          name:
+            type: string
+          audio:
+            type: object
+            properties:
+              data:
+                type: string
+              contentType:
+                type: string
+
+  Course:
+    type: object
+    properties:
+      title:
+        type: string
+      instructor:
+        type: string
+      length:
+        type: string
+      description:
+        type: string
+      coverImage:
+        type: string
+      contents:
+        type: array
+        items:
+          type: string
+      createdBy:
+        type: string
+
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      fav:
+        type: array
+        items:
+          type: string
