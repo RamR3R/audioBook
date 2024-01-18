@@ -1,12 +1,9 @@
 const express = require('express');
 const app = express();
-const multer = require('multer');
-const bodyParser = require('body-parser');
 
-// Middleware
+// Middleware for parsing the data for req.file
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Middleware for parsing form data
-app.use(multer().any()); // Middleware for handling file uploads
+app.use(express.urlencoded({ extended: true }));
 
 const userRoutes = require('./routers/userRouter');
 const abRouter = require('./routers/audiobookRouter');

@@ -10,7 +10,22 @@ const audiobookSchema =  mongoose.Schema({
   tags: [String],
   description: String,
   coverImage : String,
-  audiofileurl: String, // Store the filename or unique identifier for the audio file
+  audiofileurl: String,
+  audioFile : {
+    name : {
+      type : String,
+      required : true
+    },
+    audio : {
+      data : Buffer,
+      contentType : String,
+    },
+  },
+  uploadedBy : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+} // Store the filename or unique identifier for the audio file
 });
 
 

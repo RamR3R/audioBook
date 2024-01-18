@@ -1,4 +1,5 @@
 const Audiobook = require('../models/audiobook');
+const upload = require('../middleware/upload');
 
 const getAllAudiobooks = async (req, res) => {
   try {
@@ -23,10 +24,20 @@ const getAudiobookById = async (req, res) => {
 };
 
 const createAudiobook = async (req, res) => {
-  const { title, author, narrator, length, tag, description,coverImage, audioFileURL } = req.body;
-
+  let { title, author, narrator, length, tags, description,coverImage, audioFileURL } = req.body;
+  console.log(req.body);
+  console.log(req.file);
+  console.log(req.user.id)
+  tags = tags.split(" ");
+  let uploadedBy = req.user.id;
+  let audioFile = {
+    name : req.file.originalname,
+    audio : {
+      data : req.file.filename,
+      contentType : 'audio/mpeg'
+    }
+  };
   try {
-    let tags = tag.split(" ");
     const newAudiobook = new Audiobook({
       title,
       author,
@@ -36,6 +47,8 @@ const createAudiobook = async (req, res) => {
       description,
       coverImage,
       audioFileURL,
+      audioFile,
+      uploadedBy
     });
 
     const savedAudiobook = await newAudiobook.save();
@@ -48,12 +61,20 @@ const createAudiobook = async (req, res) => {
 const updateAudiobook = async (req, res) => {
 
   try {
-    const audiobook = await Audiobook.findByIdAndUpdate(req.params.id,req.body);
-    if (!audiobook) {
-      return res.status(404).json({ message: 'Audiobook not found' });
+    let userCheck = await Audiobook.findById(req.params.id);
+    if (!userCheck) {
+      res.status(404).json({ message: 'Audiobook not found' });
     }
-
-    res.json({message : "Data updated"});
+    if(req.user.id != userCheck.uploadedBy){
+      console.log(req.user.id , userCheck.uploadedBy+"");
+      res.status(401).json({message : "This audio book doesn't belong to you. You can edit your own books"});
+    }
+    else
+    {
+      console.log(req.body);
+      let audiobook = await Audiobook.findByIdAndUpdate(req.params.id,req.body);
+      res.json({message : "Data updated", data : audiobook});
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -61,13 +82,20 @@ const updateAudiobook = async (req, res) => {
 
 const deleteAudiobook = async (req, res) => {
   try {
-    const audiobook = await Audiobook.findById(req.params.id);
-    if (!audiobook) {
+    let userCheck = await Audiobook.findById(req.params.id);
+    if (!userCheck) {
       return res.status(404).json({ message: 'Audiobook not found' });
     }
-
-    await Audiobook.deleteOne({_id :req.params.id});
-    res.json({ message: 'Audiobook deleted successfully' });
+    if(req.user.id != userCheck.uploadedBy)
+    {
+      console.log(req.user.id , userCheck.uploadedBy+"");
+      res.status(401).json({message : "This audio book doesn't belong to you. You cannot delete it."});
+    }
+    else
+    {
+      let audiobook = await Audiobook.deleteOne({_id:req.params.id});
+      res.json({ message: 'Audiobook deleted successfully', data : audiobook });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
