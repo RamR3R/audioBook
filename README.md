@@ -44,6 +44,7 @@ npm run server
 
 This project follows the Model-View-Controller (MVC) architectural pattern. Below is an overview of the folder structure:
 1. Models
+   
 1.1 Audiobook.js
 
     Description:
@@ -87,6 +88,7 @@ This project follows the Model-View-Controller (MVC) architectural pattern. Belo
         fav: Array of favorite audiobooks (references).
 
 2. Controllers
+   
 2.1 AudiobookController.js
 
     Description:
@@ -124,6 +126,7 @@ This project follows the Model-View-Controller (MVC) architectural pattern. Belo
         userDetails: Get details of the logged-in user.
 
 3. Middleware
+   
 3.1 auth.js
 
     Description:
@@ -135,6 +138,7 @@ This project follows the Model-View-Controller (MVC) architectural pattern. Belo
     Middleware for handling file uploads using multer.
 
 4. Routes
+   
 4.1 userRoutes.js
 
     Description:
@@ -149,3 +153,15 @@ This project follows the Model-View-Controller (MVC) architectural pattern. Belo
 
     Description:
     Defines routes related to audiobook operations.
+
+# Api-Documentaiton
+   Hit this route after running the server.
+```
+http://localhost:3030/api-docs/
+```
+## Frontend
+```
+cd frontend
+run index.html
+```
+some parts of frontend is done yet to be updated.
