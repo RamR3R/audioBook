@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./global.css" />
+    <style>
+        body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .card {
+      width: 400px;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+  </head>
+  <body>
+    <div id="canvas">
+      <header class="battery-frame">
+        <p id="currentTime"></p>
+
+        <div class="you-have-exams-text">
+          <img
+            class="mobile-signal-icon"
+            loading="eager"
+            alt=""
+            src="./public/mobile-signal.svg"
+          />
+
+          <img
+            class="wifi-icon"
+            loading="eager"
+            alt=""
+            src="./public/wifi.svg"
+          />
+
+          <input class="battery" type="checkbox" />
+        </div>
+      </header>
+
+      <div class="card" id="cardDetails"></div>
+    </div>
+  </body>
+</html>
+<script src="./scripts/single.js"></script>
