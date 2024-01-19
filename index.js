@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require("cors");
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./api-doc.yml');
@@ -8,6 +9,7 @@ const swaggerDocument = YAML.load('./api-doc.yml');
 // Middleware for parsing the data for req.file
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 
 //for api-doc using swagger-doc
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
